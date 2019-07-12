@@ -1,0 +1,21 @@
+{
+   "cidades": [{"origem": "Campo Mourao", "destino": "Peabiru", "link": "https://www.clickbus.com.br/onibus/campo-mourao-pr/peabiru-pr"},
+   
+   {"origem": "Peabiru", "destino": "Eng Beltrao", "link": "https://www.clickbus.com.br/onibus/peabiru-pr/engenheiro-beltrao-pr?departureDate=2019-07-12"},
+ 
+   {"origem": "Campo Mourao", "destino": "Maringa", "link": "https://www.clickbus.com.br/onibus/campo-mourao-pr/maringa-pr?departureDate=2019-07-12"},
+   
+   {"origem": "Eng Beltrao", "destino": "Ivailandia", "link": "https://www.clickbus.com.br/onibus/engenheiro-beltrao-pr/ivailandia-pr?departureDate=2019-07-12"},
+   
+   {"origem": "Ivailandia", "destino": "Maringa", "link": "https://www.clickbus.com.br/onibus/ivailandia-pr/maringa-pr?departureDate=2019-07-12"},
+ 
+   {"origem": "Jussara", "destino": "Paicandu", "link": "https://www.clickbus.com.br/onibus/jussara-pr/paicandu-pr?departureDate=2019-07-12"},
+ 
+   {"origem": "Paicandu", "destino": "Maringa", "link": "https://www.clickbus.com.br/onibus/paicandu-pr/maringa-pr?departureDate=2019-07-12"},
+ 
+   {"origem": "Campo Mourao", "destino": "Eng Beltrao", "link": "https://www.clickbus.com.br/onibus/paicandu-pr/maringa-pr?departureDate=2019-07-12"},
+ 
+   {"origem": "Maringa", "destino": "Londrina", "link": "https://www.clickbus.com.br/onibus/maringa-pr/engenheiro-beltrao-pr?departureDate=2019-07-12"}
+ 
+   ]
+ }

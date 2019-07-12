@@ -1,24 +1,78 @@
+# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
+import json
+import networkx as nx
+import matplotlib.pyplot as plt
+
+'''Carrega o Arquivo Json'''
+arq = open('entradas.json')
+cidades = json.load(arq)
+
+'''Cria um Grafo Vazio'''
+G = nx.Graph()
+print("\n\n---------------------- Começo do Parsing ---------------\n")
+
+'''Trecho que faz os Parsing e Scraping'''
+for i in cidades['cidades']:
+
+    print("Origem: "+i['origem']+"")
+
+    '''Adiciona uma cidade Origem'''
+    G.add_node(i['origem'])
+
+    print("Destino: "+i['destino']+"")
+
+    '''Adiciona uma cidade Destino'''
+    G.add_node(i['destino'])
+
+    print(i['link'])
+    source = i['link']
+
+    '''Faz um Request no Link do site paga Obter as informações'''
+    r = requests.get(source)
+    soup = BeautifulSoup(r.content, 'html.parser')
+    precos  = soup.findAll(class_="price-value")
+    resultados = list()
+    for p in precos:
+        l = (p.text.split('R$'))
+        resultados.append(float((l[1].strip().replace(',','.'))))
+    print("Preco: "+str(min(resultados))+"\n\n")
+
+    '''Adiciona uma Aresta entre os Vertices de Origem e Destino'''
+    G.add_edge(i['origem'],i['destino'],weight=min(resultados))
 
 
-# Caso não apareça nenhum resultado, abrir esse link no navegador manualmente e depois rodar o programa
-source = 'https://www.guichevirtual.com.br/campo-mourao-pr-v-farol-pr?ida=2019-07-09'
+print("\n\n---------------------- Fim do Parsing ---------------\n")
 
-r = requests.get(source)
-print(r.headers)
+print("Caminho mais Curto entre duas Cidades: ")
+path =list(nx.shortest_simple_paths(G, source="Ivailandia", target="Campo Mourao"))
+print(path[0])
 
-soup = BeautifulSoup(r.content, 'html.parser')
+T = nx.minimum_spanning_tree(G)
 
-#print(soup.prettify())
+print("\nGrafo Gerada: ")
+print(list(G.edges(data=True)))
 
-precos  = soup.findAll(class_="passagens-comprar-preco")
-print(type(precos))
-resultados = list()
-for p in precos:
-    #print(p)
-    l = (p.text.split('R$ '))
-    print((l[1].strip().replace(',','.')))
-    resultados.append((l[1].strip().replace(',','.')))
+print("\nMST Gerada: ")
+print(list(T.edges(data=True)))
 
-print('\nDisplay all headers\n')
+subG= nx.Graph()
+
+
+for n in path[0]:
+    subG.add_node(n)
+
+for i in range(len(path) -2):
+    subG.add_edge(path[0][i], path[0][i+1])   
+
+plt.subplot(221)
+nx.draw(G, with_labels=True, font_weight='bold')
+
+plt.subplot(222)
+nx.draw(T, with_labels=True, font_weight='bold')
+
+plt.subplot(223)
+nx.draw(subG, with_labels=True, font_weight='bold')
+
+plt.show()
